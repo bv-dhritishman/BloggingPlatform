@@ -26,7 +26,9 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-    @article = Article.new(article_params)
+    parmas_temp = article_params
+    parmas_temp[:user_id] = current_user.id
+    @article = Article.new(parmas_temp)
 
     respond_to do |format|
       if @article.save
@@ -42,8 +44,11 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1
   # PATCH/PUT /articles/1.json
   def update
+    parmas_temp = article_params
+    parmas_temp[:user_id] = current_user.id
+
     respond_to do |format|
-      if @article.update(article_params)
+      if @article.update(parmas_temp)
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
         format.json { render :show, status: :ok, location: @article }
       else
