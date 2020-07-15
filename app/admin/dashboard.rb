@@ -9,5 +9,17 @@ ActiveAdmin.register_page "Dashboard" do
     #   end
     # end
 
+    columns do 
+      column do
+        panel "Users' article count" do
+          table_for User.all do |t|
+            t.column('Id') { |user| user.id }
+            t.column('Email') { |user| user.email }
+            t.column('Articles') { |user| user.articles.count }
+          end
+        end
+      end
+    end
+
   end # content
 end
