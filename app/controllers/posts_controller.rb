@@ -25,7 +25,11 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    parmas_temp = post_params
+    parmas_temp[:user_id] = current_author.id
+    @post = Post.new(parmas_temp)
+
+    # @post = Post.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -41,8 +45,11 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
+    parmas_temp = post_params
+    parmas_temp[:user_id] = current_author.id
+    
     respond_to do |format|
-      if @post.update(post_params)
+      if @post.update(parmas_temp)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -63,13 +70,14 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def post_params
-      params.require(:post).permit(:title, :body, :author_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def post_params
+    params.require(:post).permit(:title, :body, :author_id)
+  end
 end

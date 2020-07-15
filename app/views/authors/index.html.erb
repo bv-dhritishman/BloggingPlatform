@@ -12,6 +12,7 @@
     <% @authors.each do |author| %>
       <tr>
         <td><%= author.email %></td>
+        <td><%= link_to 'Show', author %></td>
         
         <% if current_author && current_author.id == author.id %>
           <td><%= link_to 'Edit', edit_author_path(author) %></td>

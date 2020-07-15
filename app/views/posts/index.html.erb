@@ -15,7 +15,7 @@
       <tr>
         <td><%= post.title %></td>
         <td><%= post.body %></td>
-        <td><%= post.author_id %></td>
+        <td><%= post.author_email %></td>
         <td><%= link_to 'Show', post %></td>
 
         <% if current_author && current_author.id == post.author_id %>
